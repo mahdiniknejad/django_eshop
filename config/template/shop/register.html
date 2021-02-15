@@ -1,0 +1,19 @@
+
+{% if register %}
+
+<div style="color: green;">
+    ثبت نام با موفقیت انجام شد
+</div>
+
+{% endif %}
+
+<div class="col-sm-4">
+    <div class="signup-form"><!--sign up form-->
+        <h2>ثبت نام کاربـر جدیـد</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ register_form }}
+            <button type="submit" class="btn btn-default">ثبت نام</button>
+        </form>
+    </div><!--/sign up form-->
+</div>

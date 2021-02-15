@@ -1,0 +1,119 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block header %}
+    {% if request.resolver_match.url_name == 'updateproduct' %}
+        ویرایش محصول
+    {% elif request.resolver_match.url_name == 'addproduct' %}
+        افزودن محصول
+    {% elif request.resolver_match.url_name == 'updateuser' %}
+        ویرایش کاربر
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if request.resolver_match.url_name == 'updateuser' %}
+
+
+    <div class="container">
+        <form  method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            {% csrf_token %}
+            <div class="container">
+                {% comment %}<div class="col-sm-10 row">
+                    <div  class="col-sm-12">
+                        {{ form.username|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-12">
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.is_stafe|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.is_active|as_crispy_field }}
+                    </div>{% endcomment %}
+
+                    <div class="col-sm-6">
+                        {{ form|crispy }}
+                        <button type="submit">
+                        {% if request.resolver_match.url_name == 'updateproduct' %}
+                            ویرایش
+                        {% elif request.resolver_match.url_name == 'addproduct' %}
+                            ارسال
+                        {% elif request.resolver_match.url_name == 'updateuser' %}
+                            ویرایش
+                        {% endif %}
+                    </button>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            
+        </form>
+    </div>
+
+
+    {% else %}
+    <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
+    <div class="container">
+        <form  method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            {% csrf_token %}
+            <div class="container">
+                <div class="col-sm-10 row">
+                    <div class="col-sm-6">
+                        {{ form.title|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.slug|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.price|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.image|as_crispy_field }}
+                    </div>
+
+                    <div  class="col-sm-12" style="margin: 20px 0 !important;">
+                        {{ form.description }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.status|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form.publish|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-12">
+                        {{ form.active|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-12">
+                        {{ form.category|as_crispy_field }}
+                    </div>
+                    <button type="submit">
+                        {% if request.resolver_match.url_name == 'updateproduct' %}
+                            ویرایش
+                        {% elif request.resolver_match.url_name == 'addproduct' %}
+                            ارسال
+                        {% endif %}
+                    </button>
+
+                </div>
+
+            </div>
+            
+        </form>
+    </div>
+    <script>
+        CKEDITOR.replace( 'description' );
+    </script>
+    {% endif %}
+{% endblock %}

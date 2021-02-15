@@ -1,0 +1,36 @@
+
+<h2>دسته بندی محصولات</h2>
+<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+{% for cat in categoris %}
+    {% if cat.parent == None %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordian" href="#{{ cat.title }}">
+                    <span class="badge pull-right"><i class="fa fa-plus"></i>
+                    </span>
+                    {% if cat.get_children %}
+                        {{ cat.title }}
+                    {% else %}
+                        <a href="{% url 'shop:category' cat.slug %}">{{ cat.title }}</a>
+                    {% endif %}
+                </a>
+            </h4>
+        </div>
+        {% if cat.get_children %}
+            <div id="{{ cat.title }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul>
+                        {% for sub_cat in cat.get_children %}
+                        <li><a href="{% url 'shop:category' sub_cat.slug %}">{{ sub_cat.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endfor %}
+
+</div><!--/category-productsr-->

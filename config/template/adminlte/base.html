@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AdminLTE 2 | Dashboard</title>
+    {% include 'adminlte/headerlink.html' %}
+</head>
+
+<body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+        {% include 'adminlte/header.html' %}
+        {% include 'adminlte/aside.html' %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        <h1>
+        {% block header %}
+        {% endblock %}
+        </h1>
+<!--         <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+        </ol> -->
+        </section>
+        <section class="content">
+            {% block content %}
+            {% endblock %}
+        </section><!-- /.content -->
+    </div>
+    {% include 'adminlte/footer.html' %}
+</body>
+
+</html>

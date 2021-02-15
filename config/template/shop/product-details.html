@@ -1,0 +1,303 @@
+{% extends 'shop/partials/base.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block title %}
+{{ object.title }}
+{% endblock %}
+
+{% block content %}
+<section>
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-sm-9 padding-right">
+				<div class="product-details"><!--product-details-->
+					<div class="col-sm-5">
+						<div class="view-product">
+							<img class="main_img" src="{{ object.image.url }}" style="height: 340px !important; width: 300px !important ; margin-right: 20px" alt="" />
+							<h3 style="margin-right: 20px">بزرگنمایـی</h3>
+						</div>
+						<div id="similar-product" class="carousel slide" data-ride="carousel">
+							
+							  <!-- Wrapper for slides -->
+							    <div class="carousel-inner">
+							    	{% for mylist in mygallery %}
+									<div class="item {{ forloop.first|yesno:'active,' }}">
+										{% for x in mylist %}
+									  		<a href=""><img class="mini_img" src="{{ x.image.url }}" alt="{{ x.title }}" width="75px" height="75px"></a>
+										
+										{% endfor %}
+									</div>						
+									{% endfor %}			
+								</div>
+
+							  <!-- Controls -->
+							  <a class="right item-control" href="#similar-product" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>
+							  <a class="left item-control" href="#similar-product" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+						</div>
+
+					</div>
+					<div class="col-sm-7">
+						<div class="product-information"><!--/product-information-->
+							<img src="" class="newarrival" alt="" />
+							<div>
+								<h2>{{ object.title }}</h2>
+								<p>شناسـه : {{ object.pk }}</p>
+							</div>
+							<div>
+								<span>
+									{% if object.status == 'p' %}
+									<span>قیمت : {{ object.price }} تومان</span>
+									{% else %}
+									<span>ناموجود</span>
+									{% endif %}
+								</span>
+								<span>
+									<form method="POST" action='{% url "order:add-user-order" %}'>
+										{% csrf_token %}
+										<label>تعداد :</label>
+										{{ UserOrder.product_id }}
+										<!-- <input type="text" value="3" class="search_box"/> -->
+										{{ UserOrder.count }}
+										<button type="submit" class="btn btn-fefault cart">
+											<i class="fa fa-shopping-cart"></i>
+											افـزودن به سبـد خریـد
+										</button>
+									</form>
+								</span>
+							</div>
+							
+						</div><!--/product-information-->
+					</div>
+				</div><!--/product-details-->
+				
+				<div class="category-tab shop-details-tab"><!--category-tab-->
+					<div class="col-sm-12">
+						<ul class="nav nav-tabs">
+							<li><a href="#details" data-toggle="tab">جزئیات</a></li>
+							<li><a href="#tag" data-toggle="tab">برچسب</a></li>
+							<li class="active"><a href="#reviews" data-toggle="tab">نظرات (5)</a></li>
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div class="tab-pane fade" id="details" >
+							<p>
+								{{ object.description|safe }}
+							</p>
+						</div>
+						
+						<div class="tab-pane fade" id="tag" >
+							<div class="col-sm-3">
+								<div class="product-image-wrapper">
+									<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="images/home/gallery.jpg" alt="" />
+											<h2>1.250.000 ريال</h2>
+											<p>توضیحات کوتاه محصول</p>
+											<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="product-image-wrapper">
+									<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="images/home/gallery.jpg" alt="" />
+											<h2>1.250.000 ريال</h2>
+											<p>توضیحات کوتاه محصول</p>
+											<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="product-image-wrapper">
+									<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="images/home/gallery.jpg" alt="" />
+											<h2>1.250.000 ريال</h2>
+											<p>توضیحات کوتاه محصول</p>
+											<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="product-image-wrapper">
+									<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="images/home/gallery.jpg" alt="" />
+											<h2>1.250.000 ريال</h2>
+											<p>توضیحات کوتاه محصول</p>
+											<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="tab-pane fade active in" id="reviews" >
+							<div class="col-sm-12">
+								<ul>
+									<li><a href=""><i class="fa fa-user"></i>مشتـری 1</a></li>
+									<li><a href=""><i class="fa fa-clock-o"></i>12:41 ب . ظ</a></li>
+									<li><a href=""><i class="fa fa-calendar-o"></i>29 تیـر 1397</a></li>
+								</ul>
+								<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده ازلورملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
+								<p><b>نظـر خود را بنویسیـد</b></p>
+								
+								<form action="#">
+									<span>
+										<input type="text" placeholder="نام و نام خانوادگـی"/>
+										<input type="email" placeholder="آدرس ایمیـل"/>
+									</span>
+									<textarea name="" ></textarea>
+									<b>رتبـه : </b> <img src="images/product-details/rating.png" alt="" />
+									<button type="button" class="btn btn-default pull-left">
+										ارسـال
+									</button>
+								</form>
+							</div>
+						</div>
+						
+					</div>
+				</div><!--/category-tab-->
+				
+				<div class="recommended_items"><!--recommended_items-->
+					<h2 class="title text-center">محصولات پیشنهادی</h2>
+					
+					<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+						<div class="carousel-inner">
+							<div class="item active">	
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="images/home/recommend1.jpg" alt="" />
+												<h2>1.250.000 ريال</h2>
+												<p>توضیحات کوتاه محصول</p>
+												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="images/home/recommend2.jpg" alt="" />
+												<h2>1.250.000 ريال</h2>
+												<p>توضیحات کوتاه محصول</p>
+												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="images/home/recommend3.jpg" alt="" />
+												<h2>1.250.000 ريال</h2>
+												<p>توضیحات کوتاه محصول</p>
+												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item">	
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="images/home/recommend1.jpg" alt="" />
+												<h2>1.250.000 ريال</h2>
+												<p>توضیحات کوتاه محصول</p>
+												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="images/home/recommend2.jpg" alt="" />
+												<h2>1.250.000 ريال</h2>
+												<p>توضیحات کوتاه محصول</p>
+												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="images/home/recommend3.jpg" alt="" />
+												<h2>1.250.000 ريال</h2>
+												<p>توضیحات کوتاه محصول</p>
+												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						  </a>
+						  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						  </a>			
+					</div>
+				</div><!--/recommended_items-->
+				
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					{% render_partial 'shop:category_module' %}
+				
+					{% render_partial 'shop:brands' %}
+					
+					<div class="price-range"><!--price-range-->
+						<h2>فیلتـر قیمـت</h2>
+						<div class="well">
+							 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+							 <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+						</div>
+					</div><!--/price-range-->
+					
+					<div class="shipping text-center"><!--shipping-->
+						<img src="images/home/shipping.jpg" alt="" />
+					</div><!--/shipping-->
+					
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+<script>
+	let mini_images = document.querySelectorAll('.mini_img');
+	let main_images = document.querySelector('.main_img');
+	mini_images.forEach(image => {
+		image.addEventListener('click', e => {
+			e.preventDefault();
+			let new_image_src = e.target.getAttribute('src');
+			let old_image_src = main_images.getAttribute('src');
+			main_images.setAttribute('src', new_image_src);
+			e.target.setAttribute('src', old_image_src);
+		});
+	});
+</script>
+
+{% endblock %}

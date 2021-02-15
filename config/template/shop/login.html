@@ -1,0 +1,38 @@
+{% extends 'shop/partials/base.html' %} {% load static %} {% load render_partial %} {% block content %}
+<div class="container">
+    <section id="form">
+        <!--form-->
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>ورود به حساب کاربـری :</h2>
+                    <form method="post">
+                        {% csrf_token %} {% comment %} {{ login_form }} {% endcomment %} {% for error in login_form.username.errors %}
+                        <p style="color: red; font-family: 'Sahel'">{{ error }}</p>
+                        {% endfor %}
+
+
+                        <label for="{{ login_form.username.id_for_label }}">{{ login_form.username.label }}</label> {{ login_form.username }}
+                        <label for="{{ login_form.password.id_for_label }}">{{ login_form.password.label }}</label> {{ login_form.password }}
+                        <span>
+							<input type="checkbox" class="checkbox"> 
+							مرا بخاطـر بسپـار
+						</span>
+                        <span>
+							<a href="{% url 'password_reset' %}">رمـز عبـور خود را فراموش کرده ام</a>
+						</span>
+                        <button type="submit" class="btn btn-default">ورود</button>
+                    </form>
+                </div>
+                <!--/login form-->
+            </div>
+            <div class="col-sm-1">
+                <h2 class="or">یا</h2>
+            </div>
+            {% render_partial 'account:register' %}
+        </div>
+    </section>
+</div>
+<!--/form-->
+{% endblock %}

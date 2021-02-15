@@ -1,0 +1,89 @@
+{% extends 'adminlte/base.html' %}
+
+{% block header %}
+    {% if request.resolver_match.url_name == 'productview' %}
+        نمایش محصولات
+    {% elif request.resolver_match.url_name == 'userview' %}
+        نمایش کاربر ها
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if request.resolver_match.url_name == 'productview' %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+        <div class="container">
+            <div class="row">    
+                <div class="table-responsive col-sm-10">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>نام</th>
+                                <th>دامنه</th>
+                                <th>زمان انتشار</th>
+                                <th>دسته</th>
+                                <th>قیمت</th>
+                                <th>تصویر</th>
+                                <th>وضعیت موجودی</th>
+                                <th>آیا نمایش داده شود</th>
+                                <th>حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in object_list %}
+                            <tr>
+                                <td><a href="{% url 'adminlte:updateproduct' product.pk %}">{{ product.title }}</a></td>
+                                <td><a href="{% url 'shop:detail' product.slug %}">{{ product.slug }}</a></td>
+                                <td>{{ product.publish }}</td>
+                                <td>{{ product.get_category }}</td>
+                                <td>{{ product.price }}</td>
+                                <td><img src="{{ product.image.url }}" alt="{{ product.title }}" width='100px'></td>
+                                <td>{% if product.status == 'p' %}موجود{% elif product.status == 'd' %}ناموجود{% else %}بزودی{% endif %}</td>
+                                <td>{% if product.active == True %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                <td><a class="text-danger" href="{% url 'adminlte:deleteview' product.pk %}">حذف</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    {% elif request.resolver_match.url_name == 'userview' %}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+        <div class="container">
+            <div class="row">    
+                <div class="table-responsive col-sm-10">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>نام کاربری</th>
+                                <th>نام</th>
+                                <th>نام خانوادگی</th>
+                                <th>عبر کاربر</th>
+                                <th>وضعیت کارمندی</th>
+                                <th>فعال بودن</th>
+                                <th>حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in object_list %}
+                            <tr>
+                                <td><a href="{% url 'adminlte:updateuser' user.pk %}">{{ user.username }}</a></td>
+                                <td>{{ user.first_name }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{% if user.is_superuser == True %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                <td>{% if user.is_stafe == True %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                <td>
+                                    {% if user.is_active == True %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}
+                                </td>
+                                <td> <a href="{% url 'adminlte:deleteuser' user.pk %}" class="text-danger">حذف</a> </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    {% endif %}
+{% endblock %}

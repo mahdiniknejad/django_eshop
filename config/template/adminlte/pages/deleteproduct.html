@@ -1,0 +1,25 @@
+{% extends 'adminlte/base.html' %}
+
+{% block header %}
+    {% if request.resolver_match.url_name == 'deleteview' %}
+        حذف محصول
+    {% elif request.resolver_match.url_name == 'deleteuser' %}
+        حذف کاربر
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if request.resolver_match.url_name == 'deleteview' %}
+        <form method="POST">
+            {% csrf_token %}
+            <p>کاربر {{ request.user }} آیا از حذف محصول {{ object.title }} مطمین هستید ؟</p>
+            <input class="btn btn-danger" type="submit" name="" value="بله">
+        </form>
+    {% elif request.resolver_match.url_name == 'deleteuser' %}
+        <form method="POST">
+            {% csrf_token %}
+            <p>کاربر {{ request.user }} آیا از حذف کاربر {{ object.username }} مطمین هستید ؟</p>
+            <input class="btn btn-danger" type="submit" name="" value="بله">
+        </form>
+    {% endif %}
+{% endblock %}

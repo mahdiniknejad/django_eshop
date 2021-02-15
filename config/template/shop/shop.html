@@ -1,0 +1,92 @@
+{% extends 'shop/partials/base.html' %}
+{% load static %}
+{% load render_partial %}
+
+{% url 'shop:category'   as category_view %}
+{% url 'shop:search' request.GET.result as search_view %}
+
+
+{% block style %}
+{% endblock %}  
+
+
+{% block title %}
+	{% if request.resolver_match.SearchView == 'shop:search' %}
+	{{ request.GET.search }}
+	{% else %}
+	{{ category.title }}
+	{% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<p>{{category_view}}</p>
+<section>
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-sm-9 padding-right">
+				<div class="features_items"><!--features_items-->
+					<h2 class="title text-center">
+					{% if request.path == 'category_view' %}
+					{{ category.title }}
+					{% else %}
+					{{ request.GET.search }}
+					{% endif %}
+
+					</h2>
+						{% for p in object_list %}
+							<div class="col-sm-4">
+								<div class="product-image-wrapper">
+									<div class="single-products">
+										<div class="productinfo text-center">
+											<a href="{% url 'shop:detail' p.slug %}">
+											<img src="{{ p.image.url }}" alt="" />
+											</a>
+											<h2>{{ p.title }}</h2>
+											<h3>{{ p.price }} ريال</h3>
+											<p>{{ p.description|truncatewords:10  }}</p>
+											{% for c in p.category.all %}
+												<a href="{% url 'shop:category' c.slug %}">#{{c.title}}</a>
+											{% endfor %}
+											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+										</div>
+									</div>
+									<div class="choose">
+										<ul class="nav nav-pills nav-justified">
+											<li><a href=""><i class="fa fa-plus-square"></i>لیست علاقه مندی ها</a></li>
+											<li><a href=""><i class="fa fa-plus-square"></i>مقایسه</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>						
+						{% endfor %}
+				</div><!--features_items-->
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					{% render_partial 'shop:category_module' %}
+					
+					{% render_partial 'shop:brands' %}
+
+					<div class="price-range"><!--price-range-->
+						<h2>فیلتـر قیمـت</h2>
+						<div class="well">
+							 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+							 <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+						</div>
+					</div><!--/price-range-->
+					
+					<div class="shipping text-center"><!--shipping-->
+						<img src="{% static 'images/home/shipping.jpg' %}" alt="" />
+					</div><!--/shipping-->
+					
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'shop/partials/base.html' %}
+{% load static %}
+
+{% block title %}
+	سبد خرید
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<section id="cart_items">
+	<div class="container">
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+			  <li><a href="/">خانـه</a></li>
+			  <li class="active">پرداخت</li>
+			</ol>
+		</div><!--/breadcrums-->
+		{% if order_list %}
+		<div class="table-responsive cart_info">
+			<table class="table table-condensed">
+				<thead>
+					<tr class="cart_menu">
+						<td class="image">کـالا</td>
+						<td class="description"></td>
+						<td class="price">قیمت</td>
+						<td class="quantity">تعـداد</td>
+						<td class="total">مجمـوع</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for od in order_list %}
+					<tr>
+						<td class="cart_product">
+							<a href="{% url 'shop:detail' od.product.slug  %}"><img src="{{ od.product.image.url }}" alt="{{ od.product.title }}" width="110px" height="110px"></a>
+						</td>
+						<td class="cart_description">
+							<h4><a href="">{{ od.product.title }}</a></h4>
+							<p>شناسـه : {{ od.product.pk }}</p>
+						</td>
+						<td class="cart_price">
+							<p>{{ od.price }} ريال</p>
+						</td>
+						<td class="cart_quantity">
+							<div class="cart_quantity_button">
+								<span>{{ od.count }}</span>
+							</div>
+						</td>
+						<td class="cart_total">
+							<p class="cart_total_price">{{ od.sum_price }} ريال</p>
+						</td>
+						<td class="cart_delete">
+							<a class="cart_quantity_delete" href="{% url 'order:delete_order_detail' od.pk %}"><i class="fa fa-times"></i></a>
+						</td>
+
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% else %}
+		<div class="">
+			<div class="alert alert-warning">
+				سبد خرید شما خالی است
+			</div>
+		</div>
+		{% endif %}
+	</div>
+</section> <!--/#cart_items-->
+
+<section id="do_action">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="total_area">
+					<ul>
+						<li>مجمـوع سبـد خریـد <span>{{ total_price_1 }} ريال</span></li>
+						<li>مالیـات (9%) <span>{{ p_9percent }} ريال</span></li>
+						<li>هزینـه حمل و نقـل <span>{% if haml_va_naql == 0 %}رایـگان{% else %}{{ haml_va_naql }}{% endif %}</span></li>
+						<li>مجمـوع <span>{{ total_price_2 }} ريال</span></li>
+					</ul>
+						<a class="btn btn-default update" href="/order_check/">به روز رسانی سبـد خریـد </a>
+						<a class="btn btn-default check_out" href="checkout.html">پرداخت</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section><!--/#do_action-->
+{% endblock %}

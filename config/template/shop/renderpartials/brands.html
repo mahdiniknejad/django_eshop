@@ -1,0 +1,13 @@
+<div class="brands_products"><!--brands_products-->
+    <h2>برنـد ها</h2>
+    <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+            {% for cat in categoris %}
+            {% if cat.brand %}
+            <li><a href="{% url 'shop:category' cat.slug %}"> <span class="pull-left">({{ cat.products.count }})</span>{{ forloop.counter }}- {{ cat.title }} </a></li>
+            {% endif %}
+            {% endfor %}
+
+        </ul>
+    </div>
+</div><!--/brands_products-->

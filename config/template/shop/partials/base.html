@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% include 'shop/partials/headerlink.html' %}
+    {% block style %}
+    {% endblock %}  
+</head>
+<body>
+    {% include 'shop/partials/header.html' %}
+    {% block content %}
+    {% endblock %}
+    {% include 'shop/partials/footer.html' %}
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
